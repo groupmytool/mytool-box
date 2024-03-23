@@ -12,6 +12,8 @@ import java.util.ResourceBundle;
  */
 public class LocaleUtil {
 
+  private static Locale locale;
+
   private static final Map<String, SimpleStringProperty> BUNDLE_MAP = new HashMap<>();
 
   public static void init() {
@@ -34,12 +36,23 @@ public class LocaleUtil {
     return BUNDLE_MAP.get(key);
   }
 
+  public static void setLocale(String language) {
+    if (Locale.CHINA.getLanguage().equalsIgnoreCase(language)) {
+      LocaleUtil.locale = Locale.CHINA;
+    } else {
+      LocaleUtil.locale = Locale.US;
+    }
+  }
+
   /**
    * Use Chinese only when it's China, use English in all other cases
    *
    * @return Locale China or US
    */
   public static Locale getLocale() {
+    if (locale != null) {
+      return locale;
+    }
     if (Locale.CHINA.getLanguage().equals(Locale.getDefault().getLanguage())) {
       return Locale.CHINA;
     } else {
