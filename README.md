@@ -1,6 +1,10 @@
 # Mytool Box
 
-Java and JavaFx implementation of [LafTools](https://github.com/work7z/LafTools).
+The inspiration comes from [LafTools](https://github.com/work7z/LafTools), but I didn't want to use Electron which
+includes a full browser, nor deal with the dependency hell of node_module, so I redesigned and implemented it using 
+Java and JavaFX.
+
+![preview](./docs/preview/base64.png)
 
 # Prerequisites
 
@@ -54,4 +58,4 @@ output: `target/mytool-box`
 
 # Other languages
 
-* [中文](./README.zh.md)
+* [中文](docs/README.zh.md)

@@ -1,6 +1,9 @@
-# Mytool Box
+# 麦图工具箱
 
-Java 和 JavaFx 实现的 [LafTools](https://github.com/work7z/LafTools).
+灵感来自于 [LafTools](https://github.com/work7z/LafTools)，但不想使用包含完整浏览器的Electron以及依赖地狱的node_module，采用Java
+和 JavaFX重新设计实现。
+
+![preview](./preview/base64-zh.png)
 
 # 环境准备
 
@@ -13,6 +16,7 @@ Java 和 JavaFx 实现的 [LafTools](https://github.com/work7z/LafTools).
 修改 `pom.xml` 为你自己的JDK路径：
 
 ```xml
+
 <properties>
   <openjdk.home>
     /Library/Java/JavaVirtualMachines/openjdk@21.jdk/Contents/Home
@@ -54,4 +58,4 @@ com.mytool.box.MytoolBoxApp.java
 
 # Other languages
 
-* [English](./README.md)
+* [English](../README.md)
