@@ -8,6 +8,7 @@ import com.mytool.box.view.component.HgrowSplitPane;
 import com.mytool.box.view.menu.MenuButton;
 import com.mytool.box.view.menu.MenuScrollPane;
 import com.mytool.box.view.menu.MenuVBox;
+import com.mytool.box.view.menu.SettingsButton;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -19,6 +20,7 @@ import static com.mytool.box.service.icon.MenuIconInstance.MODULE_AI_LAB;
 import static com.mytool.box.service.icon.MenuIconInstance.MODULE_MANUALS;
 import static com.mytool.box.service.icon.MenuIconInstance.MODULE_NOTES;
 import static com.mytool.box.service.icon.MenuIconInstance.MODULE_RESOURCES;
+import static com.mytool.box.service.icon.MenuIconInstance.MODULE_SETTINGS;
 import static com.mytool.box.service.icon.MenuIconInstance.MODULE_TOOLS;
 
 /**
@@ -44,19 +46,19 @@ public class ModuleController {
   public MenuScrollPane getView() {
     MenuScrollPane menu = new MenuScrollPane();
     MenuVBox menuVbox = new MenuVBox();
+
     menu.setContent(menuVbox);
 
     MenuButton toolBtn = new MenuButton(MODULE_TOOLS, LocaleUtil.get("module.tool"), toolEventHandler());
-    menuVbox.getChildren().add(toolBtn);
     MenuButton bookBtn = new MenuButton(MODULE_MANUALS, LocaleUtil.get("module.manual"), todoEventHandler());
-    menuVbox.getChildren().add(bookBtn);
     MenuButton resourceBtn = new MenuButton(MODULE_RESOURCES, LocaleUtil.get("module.resource"), todoEventHandler());
-    menuVbox.getChildren().add(resourceBtn);
     MenuButton noteBtn = new MenuButton(MODULE_NOTES, LocaleUtil.get("module.note"), todoEventHandler());
-    menuVbox.getChildren().add(noteBtn);
     MenuButton aiLibBtn = new MenuButton(MODULE_AI_LAB, LocaleUtil.get("module.ai_lab"), todoEventHandler());
-    menuVbox.getChildren().add(aiLibBtn);
+    menuVbox.addTopAll(toolBtn, bookBtn, resourceBtn, noteBtn, aiLibBtn);
     // todo: https://sunpma.com/other/rgb/
+    SettingsButton settingsButton = new SettingsButton(MODULE_SETTINGS, LocaleUtil.get("module.setting"), mouseEvent -> {
+    });
+    menuVbox.addBottom(settingsButton);
     return menu;
   }
 

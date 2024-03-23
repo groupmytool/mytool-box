@@ -15,6 +15,7 @@ public class MenuScrollPane extends ScrollPane {
   public MenuScrollPane() {
     super();
     this.setFitToWidth(true);
+    this.setFitToHeight(true);
     this.setMinWidth(MENU_WIDTH);
     this.setMaxWidth(MENU_WIDTH);
     this.setPrefWidth(MENU_WIDTH);
