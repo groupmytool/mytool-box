@@ -31,7 +31,7 @@ public class MenuController {
 
     TreeItem<String> safeItem = new ExpTreeItem<>(LocaleUtil.get("tool.cyberSecurity"));
     rootNode.getChildren().add(safeItem);
-    TreeItem<String> encodeItem = new ExpTreeItem<>("编码和解码");
+    TreeItem<String> encodeItem = new ExpTreeItem<>(LocaleUtil.get("tool.encodeDecode"));
     safeItem.getChildren().add(encodeItem);
     encodeItem.getChildren().add(new ExpTreeItem<>("Base32", true));
     encodeItem.getChildren().add(new ExpTreeItem<>("Base45", true));
@@ -42,7 +42,7 @@ public class MenuController {
     encodeItem.getChildren().add(new ExpTreeItem<>("Hex", true));
     encodeItem.getChildren().add(new ExpTreeItem<>("BCD", true));
 
-    TreeItem<String> digestItem = new ExpTreeItem<>("摘要算法");
+    TreeItem<String> digestItem = new ExpTreeItem<>(LocaleUtil.get("tool.digestAlgorithm"));
     safeItem.getChildren().add(digestItem);
     digestItem.getChildren().add(new ExpTreeItem<>("MD2", true));
     digestItem.getChildren().add(new ExpTreeItem<>("MD4", true));
@@ -55,7 +55,7 @@ public class MenuController {
 
     TreeItem<String> formatItem = new ExpTreeItem<>(LocaleUtil.get("tool.formatter"));
     rootNode.getChildren().add(formatItem);
-    TreeItem<String> codeFormatItem = new ExpTreeItem<>("代码格式化");
+    TreeItem<String> codeFormatItem = new ExpTreeItem<>(LocaleUtil.get("tool.codePrettier"));
     formatItem.getChildren().add(codeFormatItem);
     codeFormatItem.getChildren().add(new ExpTreeItem<>("JSON格式化", true));
     codeFormatItem.getChildren().add(new ExpTreeItem<>("JavaScript格式化", true));
@@ -68,7 +68,7 @@ public class MenuController {
     codeFormatItem.getChildren().add(new ExpTreeItem<>("Markdown格式化", true));
     codeFormatItem.getChildren().add(new ExpTreeItem<>("TypeScript格式化", true));
     codeFormatItem.getChildren().add(new ExpTreeItem<>("GraphQL格式化", true));
-    TreeItem<String> codeEncryptItem = new ExpTreeItem<>("代码压缩混淆");
+    TreeItem<String> codeEncryptItem = new ExpTreeItem<>(LocaleUtil.get("tool.codeMinifier"));
     formatItem.getChildren().add(codeEncryptItem);
     codeEncryptItem.getChildren().add(new ExpTreeItem<>("CSS压缩", true));
 
