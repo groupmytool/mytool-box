@@ -1,0 +1,27 @@
+/* remove tree view background color */
+.tree-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+
+.tree-cell > .tree-disclosure-node {
+
+}
+
+.tree-cell > .tree-disclosure-node > .arrow {
+
+}
+
+.tree-cell {
+    -fx-background-color: transparent;
+}
+
+.tree-cell:selected {
+    -fx-background-color: #d9dbdc;
+    -fx-text-fill: black;
+}
+
+.tree-cell:hover {
+    -fx-background-color: #d9dbdc;
+}

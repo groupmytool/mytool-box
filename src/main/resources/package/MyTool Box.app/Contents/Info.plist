@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>CFBundleVersion</key>
+    <string>1.0</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.mytool.group.mytool-box</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>CFBundleExecutable</key>
+    <string>MyTool Box</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon.icns</string>
+    <key>CFBundleFileName</key>
+    <string>AppIcon</string>
+    <key>CFBundleName</key>
+    <string>MyTool Box</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.utilities</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>10.11</string>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>English</string>
+    <key>CFBundleAllowMixedLocalizations</key>
+    <true/>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>DTPlatformName</key>
+    <string>macosx</string>
+    <key>DTSDKName</key>
+    <string>macosx14.4</string>
+    <key>CFBundleSupportedPlatforms</key>
+    <array>
+      <string>MacOSX</string>
+    </array>
+    <key>DTPlatformVersion</key>
+    <string>14.4</string>
+    <key>DTPlatformBuild</key>
+    <string>23E208</string>
+    <key>DTSDKBuild</key>
+    <string>23E208</string>
+    <key>DTXcode</key>
+    <string>1530</string>
+    <key>DTXcodeBuild</key>
+    <string>15E204a</string>
+    <key>BuildMachineOSBuild</key>
+    <string>22A380019</string>
+  </dict>
+</plist>

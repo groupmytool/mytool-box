@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.mytool.group</groupId>
+  <artifactId>mytool-box</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>MyTool Box</name>
+
+  <properties>
+    <java.version>21</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <javafx.version>21.0.2</javafx.version>
+    <imageio.icns.version>3.9.4</imageio.icns.version>
+    <dd.plist.version>1.27</dd.plist.version>
+    <code.gson.version>2.10.1</code.gson.version>
+    <java.semver.version>0.10.2</java.semver.version>
+    <junit.version>5.9.2</junit.version>
+
+    <javafx.plugin.version>0.0.8</javafx.plugin.version>
+    <gluonfx.plugin.version>1.0.22</gluonfx.plugin.version>
+
+    <build.launch.name>${project.artifactId}</build.launch.name>
+    <build.launch.path>${project.build.directory}/libs/launch</build.launch.path>
+    <build.dependency.path>${project.build.directory}/libs/dependency</build.dependency.path>
+    <runtime.image>runtime-image</runtime.image>
+    <main.module>com.mytool.box</main.module>
+    <main.class>com.mytool.box.MytoolBoxApp</main.class>
+    <app.launcher>app</app.launcher>
+    <app.name>MyTool Box</app.name>
+    <app.vendor>com.mytool.box</app.vendor>
+
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <release>${java.version}</release>
+        </configuration>
+      </plugin>
+      <!-- 依赖Jar仓库 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.6.1</version>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${build.dependency.path}</outputDirectory>
+              <overWriteReleases>true</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <includeScope>compile</includeScope>
+              <includeScope>runtime</includeScope>
+              <useRepositoryLayout>false</useRepositoryLayout>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- 主程序Jar入口 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.3.0</version>
+        <configuration>
+          <outputDirectory>${build.launch.path}</outputDirectory>
+          <finalName>${build.launch.name}</finalName>
+          <archive>
+            <manifest>
+              <mainClass>${main.class}</mainClass>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>${build.dependency.path}</classpathPrefix>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>3.1.1</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>windows-profile</id>
+      <activation>
+        <os>
+          <family>windows</family>
+        </os>
+      </activation>
+      <properties>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>linux-profile</id>
+      <activation>
+        <os>
+          <family>unix</family>
+          <name>Linux</name>
+        </os>
+      </activation>
+      <properties>
+
+      </properties>
+    </profile>
+
+    <profile>
+      <id>mac-profile</id>
+      <activation>
+        <os>
+          <family>mac</family>
+        </os>
+      </activation>
+      <properties>
+        <openjdk.home>
+          /Library/Java/JavaVirtualMachines/openjdk@21.jdk/Contents/Home
+        </openjdk.home>
+        <nikjdk.home>
+          /Library/Java/LibericaNativeImageKit/liberica-vm-full-23.1.2-openjdk21/Contents/Home
+        </nikjdk.home>
+        <gluon.home>
+          /Library/Java/JavaVirtualMachines/graalvm-svm-java17-darwin-gluon-22.1.0.1-Final/Contents/Home
+        </gluon.home>
+      </properties>
+    </profile>
+
+    <profile>
+      <!-- 使用 jlink 和 jpackage 打包裁切runtime -->
+      <!-- Requirement: OpenJDK21 -->
+      <!-- ./mvnw clean package -P jpackage -->
+      <id>jpackage</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-controls</artifactId>
+          <version>${javafx.version}</version>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.8</version>
+            <executions>
+              <execution>
+                <id>jlink</id>
+                <phase>package</phase>
+                <configuration>
+                  <target>
+                    <property name="java-home" value="${openjdk.home}"/>
+                    <property name="module-path" value="${build.launch.path}:${build.dependency.path}"/>
+                    <property name="main-module" value="${main.module}"/>
+                    <property name="main-class" value="${main.class}"/>
+                    <property name="runtime-image" value="${project.build.directory}/${runtime.image}"/>
+                    <property name="package-name" value="${project.artifactId}"/>
+                    <property name="package-out" value="${project.build.directory}"/>
+                    <property name="package-app" value="${project.artifactId}.app"/>
+                    <property name="package-dmg" value="${project.artifactId}.dmg"/>
+                    <!-- 运行 jlink 命令 -->
+                    <delete dir="${runtime-image}"/>
+                    <exec executable="${java-home}/bin/jlink">
+                      <arg value="--module-path"/>
+                      <arg value="${module-path}"/>
+                      <arg value="--add-modules"/>
+                      <arg value="${main-module}"/>
+                      <arg value="--output"/>
+                      <arg value="${runtime-image}"/>
+                      <arg value="--no-header-files"/>
+                      <arg value="--no-man-pages"/>
+                    </exec>
+                    <echo>"Execute jlink Success..."</echo>
+                    <delete dir="${package-out}/${package-name}.app"/>
+                    <delete dir="${package-out}/${package-name}.dmg"/>
+                    <exec executable="${java-home}/bin/jpackage">
+                      <arg value="--type"/>
+                      <!-- app-image 或者 dmg -->
+                      <arg value="app-image"/>
+                      <arg value="--name"/>
+                      <arg value="${package-name}"/>
+                      <arg value="--app-version"/>
+                      <arg value="1.0.1"/>
+                      <arg value="--module"/>
+                      <arg value="${main-module}/${main-class}"/>
+                      <arg value="--runtime-image"/>
+                      <arg value="${runtime-image}"/>
+                      <arg value="--dest"/>
+                      <arg value="${package-out}"/>
+                    </exec>
+                    <echo>"Execute jpackage Success..."</echo>
+                  </target>
+                </configuration>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <!-- 借助LibericaNativeImageKit使用native-image打包native镜像 -->
+      <!-- Requirement: [Liberica Native Image Kit 23](https://bell-sw.com/pages/downloads/native-image-kit/) -->
+      <!-- ./mvnw clean package -P native -->
+      <id>native</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.11.0</version>
+            <configuration>
+              <compilerArgs>
+                <arg>--module-path</arg>
+                <arg>${nikjdk.home}/jmods</arg>
+                <arg>--add-modules</arg>
+                <arg>javafx.controls,javafx.graphics,javafx.base</arg>
+              </compilerArgs>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.8</version>
+            <executions>
+              <execution>
+                <id>native-image</id>
+                <phase>package</phase>
+                <configuration>
+                  <target>
+                    <property name="java-home" value="${nikjdk.home}"/>
+                    <property name="launch-path" value="${build.launch.path}"/>
+                    <property name="launch-name" value="${build.launch.name}"/>
+                    <property name="package-out" value="${project.build.directory}"/>
+                    <!-- 运行 native-image 命令 -->
+                    <exec executable="${java-home}/bin/native-image">
+                      <arg value="-jar"/>
+                      <arg value="${launch-path}/${launch-name}.jar"/>
+                      <arg value="${package-out}/${launch-name}"/>
+                    </exec>
+                    <echo>"Execute native build Success..."</echo>
+                  </target>
+                </configuration>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <!-- 使用gluon打包native镜像，必须设置 GRAALVM_HOME 环境变量，Java可以使用OpenJDK，也可以使用GRAALVM_HOME -->
+      <!-- Requirement: [GraalVM CE Gluon 22.1.0.1-Final](https://github.com/gluonhq/graal/releases/tag/gluon-22.1.0.1-Final) -->
+      <!-- ./mvnw clean package gluonfx:build -P gluon -->
+      <!-- ./mvnw gluonfx:package -P gluon -->
+      <id>gluon</id>
+      <properties>
+        <java.compiler.version>17</java.compiler.version>
+        <java.target.version>17</java.target.version>
+      </properties>
+      <repositories>
+        <repository>
+          <id>GluonFX</id>
+          <url>https://nexus.gluonhq.com/nexus/content/repositories/releases/</url>
+        </repository>
+      </repositories>
+      <dependencies>
+        <dependency>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-controls</artifactId>
+          <version>${javafx.version}</version>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.11.0</version>
+            <configuration>
+              <source>${java.compiler.version}</source>
+              <target>${java.target.version}</target>
+              <release>${java.target.version}</release>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>com.gluonhq</groupId>
+            <artifactId>gluonfx-maven-plugin</artifactId>
+            <version>${gluonfx.plugin.version}</version>
+            <executions>
+              <execution>
+                <phase>package</phase>
+              </execution>
+            </executions>
+            <configuration>
+              <target>host</target>
+              <mainClass>${main.module}/${main.class}</mainClass>
+              <graalvmHome>${gluon.home}</graalvmHome>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+  </profiles>
+
+</project>
